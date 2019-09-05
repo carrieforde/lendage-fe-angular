@@ -1,21 +1,126 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<form [formGroup]="profileForm"
+  (ngSubmit)="submitForm()"
+  *ngIf="!userId">
+  <div class="form-field">
+    <label for="firstName">First Name</label>
+    <input type="text"
+      id="firstName"
+      name="firstName"
+      formControlName="firstName">
+  </div>
 
-<router-outlet></router-outlet>
+  <div class="form-field">
+    <label for="lastName">Last Name</label>
+    <input type="text"
+      id="lastName"
+      name="lastName"
+      formControlName="lastName">
+  </div>
+
+  <div class="form-field">
+    <label for="address">Address</label>
+    <input type="text"
+      id="address"
+      name="address"
+      formControlName="address">
+  </div>
+
+  <div class="form-field">
+    <label for="city">City</label>
+    <input type="text"
+      id="city"
+      name="city"
+      formControlName="city">
+  </div>
+
+  <div class="form-field">
+    <label for="state">State</label>
+    <input type="text"
+      id="state"
+      name="state"
+      formControlName="state">
+  </div>
+
+  <div class="form-field">
+    <label for="zip">Zip</label>
+    <input type="text"
+      id="zip"
+      name="zip"
+      formControlName="zip">
+  </div>
+
+  <div class="form-field">
+    <label for="phone">Last Name</label>
+    <input type="tel"
+      id="phone"
+      name="phone"
+      inputmode="tel"
+      formControlName="phone">
+  </div>
+
+  <div class="form-field">
+    <label for="email">Email</label>
+    <input type="email"
+      id="email"
+      name="email"
+      inputmode="email"
+      formControlName="email">
+  </div>
+
+  <button type="submit">Continue</button>
+  <button type="reset"
+    (click)="resetForm('profileForm')">Cancel</button>
+</form>
+
+<form [formGroup]="dataForm"
+  (ngSubmit)="submitData()"
+  *ngIf="userId">
+  <div class="form-field">
+    <label for="monthlyIncome">Monthly Income</label>
+    <input type="text"
+      id="monthlyIncome"
+      name="monthlyIncome"
+      inputmode="numeric"
+      formControlName="monthlyIncome">
+  </div>
+
+  <div class="form-field">
+    <label for="otherMonthlyIncome">Other Monthly Income</label>
+    <input type="text"
+      id="otherMonthlyIncome"
+      name="otherMonthlyIncome"
+      inputmode="numeric"
+      formControlName="otherMonthlyIncome">
+  </div>
+
+  <div class="form-field">
+    <label for="rent">Rent</label>
+    <input type="radio"
+      id="rent"
+      value="rent"
+      formControlName="rentOrOwn">
+
+    <label for="own">Own</label>
+    <input type="radio"
+      id="own"
+      value="own"
+      formControlName="rentOrOwn">
+  </div>
+
+  <div class="form-field">
+    <label for="otherMonthlyIncome">Other Monthly Expenses</label>
+    <input type="text"
+      id="otherMonthlyExpenses"
+      name="otherMonthlyExpenses"
+      inputmode="numeric"
+      formControlName="otherMonthlyExpenses">
+  </div>
+
+  {{dataForm.value}}
+
+  <button type="submit">Submit</button>
+  <button type="reset"
+    (click)="resetForm('dataForm')">Cancel</button>
+</form>
+<!--
+      <router-outlet></router-outlet> -->

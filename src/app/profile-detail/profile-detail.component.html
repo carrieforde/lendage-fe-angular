@@ -1,0 +1,13 @@
+<div *ngIf="user | async as u">
+  <h2>{{u.firstName}} {{u.lastName}}</h2>
+  <address *ngIf="u.address && u.city && u.state">
+    {{u.address}}<br>
+    {{u.city}}, {{u.state}} {{u.zip}}
+  </address>
+
+  <a *ngIf="u.email"
+    href="mailto:{{u.email}}">{{u.email}}</a><br>
+
+  <a *ngIf="u.phone"
+    href="tel:+{{u.phone}}">{{u.phone}}</a>
+</div>

@@ -1,76 +1,4 @@
-<form [formGroup]="profileForm"
-  (ngSubmit)="submitForm()"
-  *ngIf="!userId">
-  <div class="form-field">
-    <label for="firstName">First Name</label>
-    <input type="text"
-      id="firstName"
-      name="firstName"
-      formControlName="firstName">
-  </div>
-
-  <div class="form-field">
-    <label for="lastName">Last Name</label>
-    <input type="text"
-      id="lastName"
-      name="lastName"
-      formControlName="lastName">
-  </div>
-
-  <div class="form-field">
-    <label for="address">Address</label>
-    <input type="text"
-      id="address"
-      name="address"
-      formControlName="address">
-  </div>
-
-  <div class="form-field">
-    <label for="city">City</label>
-    <input type="text"
-      id="city"
-      name="city"
-      formControlName="city">
-  </div>
-
-  <div class="form-field">
-    <label for="state">State</label>
-    <input type="text"
-      id="state"
-      name="state"
-      formControlName="state">
-  </div>
-
-  <div class="form-field">
-    <label for="zip">Zip</label>
-    <input type="text"
-      id="zip"
-      name="zip"
-      formControlName="zip">
-  </div>
-
-  <div class="form-field">
-    <label for="phone">Last Name</label>
-    <input type="tel"
-      id="phone"
-      name="phone"
-      inputmode="tel"
-      formControlName="phone">
-  </div>
-
-  <div class="form-field">
-    <label for="email">Email</label>
-    <input type="email"
-      id="email"
-      name="email"
-      inputmode="email"
-      formControlName="email">
-  </div>
-
-  <button type="submit">Continue</button>
-  <button type="reset"
-    (click)="resetForm('profileForm')">Cancel</button>
-</form>
+<!-- <app-profile-form></app-profile-form> -->
 
 <form [formGroup]="dataForm"
   (ngSubmit)="submitData()"
@@ -122,5 +50,4 @@
   <button type="reset"
     (click)="resetForm('dataForm')">Cancel</button>
 </form>
-<!--
-      <router-outlet></router-outlet> -->
+<router-outlet></router-outlet>

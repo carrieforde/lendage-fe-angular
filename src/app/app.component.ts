@@ -9,16 +9,6 @@ const API_URI = 'http://104.154.204.160:8080/users';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  profileForm = this.fb.group({
-    firstName: [''],
-    lastName: [''],
-    address: [''],
-    city: [''],
-    state: [''],
-    zip: [''],
-    phone: [''],
-    email: ['']
-  });
   userId: string;
   dataForm = this.fb.group({
     monthlyIncome: [''],
@@ -28,19 +18,6 @@ export class AppComponent {
   });
 
   constructor(private fb: FormBuilder) { }
-
-  submitForm() {
-    fetch(API_URI, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.profileForm.value)
-    })
-      .then(res => res.json())
-      .then(response => console.log(this.userId = response.id))
-      .catch(error => console.error('Error:', error));
-  }
 
   submitData() {
     const { monthlyIncome, otherMonthlyIncome, rentOrOwn, otherMonthlyExpenses } = this.dataForm.value;

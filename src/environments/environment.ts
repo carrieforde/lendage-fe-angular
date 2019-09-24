@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyA_ezNFx1wsU6h4y_TZ5J3b8iGAUBE6Hbs',
+    authDomain: 'lendage-fe-fb.firebaseapp.com',
+    databaseURL: 'https://lendage-fe-fb.firebaseio.com',
+    projectId: 'lendage-fe-fb',
+    storageBucket: '',
+    messagingSenderId: '350308877002',
+    appId: '1:350308877002:web:b4a9ab086b43f6d1c72a33'
+  }
 };
 
 /*

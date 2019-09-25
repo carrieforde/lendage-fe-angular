@@ -1,5 +1,6 @@
 <form [formGroup]="profileForm"
-  (ngSubmit)="submitForm()">
+  (ngSubmit)="submitForm()"
+  *ngIf="!userId || userId && (user | async); else loading">
 
   <mat-form-field>
     <mat-label for="firstName">First Name</mat-label>
@@ -64,7 +65,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label for="phone">Last Name</mat-label>
+    <mat-label for="phone">Phone</mat-label>
     <input matInput
       type="tel"
       id="phone"
@@ -85,8 +86,12 @@
 
   <button mat-flat-button
     color="primary"
-    type="submit">Continue</button>
+    type="submit">{{userId ? 'Update' : 'Continue'}}</button>
   <button mat-flat-button
     type="reset"
     (click)="resetForm('profileForm')">Cancel</button>
 </form>
+
+<ng-template #loading>
+  Loading user...
+</ng-template>

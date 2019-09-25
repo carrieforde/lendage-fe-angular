@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Profile } from '../profile';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-form',
@@ -20,8 +22,31 @@ export class ProfileFormComponent {
     phone: [''],
     email: ['']
   });
+  private userDoc: AngularFirestoreDocument<Profile>;
+  user: Observable<Profile>;
+  userId: string;
 
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private router: Router) { }
+  constructor(private fb: FormBuilder, private afs: AngularFirestore, private router: Router, private route: ActivatedRoute) {
+    this.route.params.subscribe((params => this.userId = params.id));
+
+    if (this.userId) {
+      this.userDoc = this.afs.doc<Profile>(`users/${this.userId}`);
+      this.user = this.userDoc.snapshotChanges()
+        .pipe(
+          map(action => {
+            const data = action.payload.data();
+            const id = action.payload.id;
+            return { id, ...data };
+          })
+        )
+        .pipe(
+          tap(user => {
+            const { firstName, lastName, address, city, state, zip, phone, email } = user;
+            this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
+          })
+        );
+    }
+  }
 
   submitForm() {
     const usersCollection = this.afs.collection<Profile>('users');
@@ -31,6 +56,12 @@ export class ProfileFormComponent {
 
   resetForm(form: string) {
     this[form].reset();
-    window.alert('Form successfully aborted!');
+
+    if (this.userId) {
+      // TODO: Give the user the option to delete the user, or undo their changes (try Snapshot changes?)
+      this.afs.doc<Profile>(`users/${this.userId}`).delete();
+    }
+
+    this.router.navigate(['/']);
   }
 }

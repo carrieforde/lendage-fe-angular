@@ -11,4 +11,16 @@
 
   <a *ngIf="u.phone"
     href="tel:+{{u.phone}}">{{u.phone}}</a>
+
+  <div>
+    <button mat-flat-button
+      color="primary"
+      type="button"
+      (click)="editUser(userId)">Edit</button>
+
+    <button mat-button
+      color="warn"
+      type="button"
+      (click)="deleteUser(userId)">Delete</button>
+  </div>
 </div>

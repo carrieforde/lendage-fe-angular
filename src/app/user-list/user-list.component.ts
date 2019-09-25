@@ -27,15 +27,11 @@ export class UserListComponent {
       );
   }
 
-  deleteUser(id: string) {
-    this.afs.doc<Profile>(`users/${id}`).delete();
+  viewUser(id: string) {
+    this.router.navigate([`/user/${id}`]);
   }
 
   addUser() {
     this.router.navigate(['/form']);
-  }
-
-  editUser(id: string) {
-    this.router.navigate([`/user/${id}/edit`]);
   }
 }

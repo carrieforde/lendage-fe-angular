@@ -14,12 +14,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileDetailComponent } from './profile-detail/profile-detail.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileFormComponent,
-    ProfileDetailComponent
+    ProfileDetailComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Profile } from '../profile';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   templateUrl: './profile-detail.component.html',
   styleUrls: ['./profile-detail.component.css']
 })
-export class ProfileDetailComponent implements OnInit {
+export class ProfileDetailComponent {
   private userDoc: AngularFirestoreDocument<Profile>;
   userId: string;
   user: Observable<Profile>;
@@ -26,7 +26,6 @@ export class ProfileDetailComponent implements OnInit {
 
   deleteUser(id: string) {
     this.afs.doc<Profile>(`users/${id}`).delete();
+    this.router.navigate(['/']);
   }
-
-  ngOnInit() { }
 }

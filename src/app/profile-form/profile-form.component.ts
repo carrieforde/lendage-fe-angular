@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Profile } from '../profile';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-form',
@@ -42,10 +42,19 @@ export class ProfileFormComponent {
         .pipe(
           tap(user => {
             const { firstName, lastName, address, city, state, zip, phone, email } = user;
-            this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
+
+            if (!firstName && !lastName) {
+              this.profileForm.reset();
+            } else {
+              this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
+            }
           })
         );
     }
+  }
+
+  updateForm() {
+    this.userDoc.update(this.profileForm.value);
   }
 
   submitForm() {

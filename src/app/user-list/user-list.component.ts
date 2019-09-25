@@ -32,6 +32,6 @@ export class UserListComponent {
   }
 
   addUser() {
-    this.router.navigate(['/form']);
+    this.usersCollection.add({ firstName: '', lastName: '' }).then(docRef => this.router.navigate([`/user/${docRef.id}/edit`]));
   }
 }

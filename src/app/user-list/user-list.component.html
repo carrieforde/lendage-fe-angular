@@ -1,0 +1,20 @@
+<ul>
+  <li *ngFor="let user of (users | async)">
+    <h3>{{user.firstName}} {{user.lastName}}</h3>
+    <p *ngIf="user.city && user.state">{{user.city}}, {{user.state}}</p>
+    <div>
+      <button mat-flat-button
+        color="primary"
+        type="button"
+        (click)="editUser(user.id)">Edit</button>
+      <button mat-flat-button
+        type="button"
+        (click)="deleteUser(user.id)">Delete</button>
+    </div>
+  </li>
+</ul>
+
+<button mat-flat-button
+  color="primary"
+  type="button"
+  (click)="addUser()">Add User</button>

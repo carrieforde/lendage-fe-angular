@@ -1,0 +1,18 @@
+mat-card {
+  margin: 20px;
+  padding: 20px;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.mat-flat-button {
+  margin-top: 12px;
+}
+
+small {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}

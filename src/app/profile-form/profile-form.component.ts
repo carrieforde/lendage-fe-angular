@@ -28,29 +28,26 @@ export class ProfileFormComponent {
 
   constructor(private fb: FormBuilder, private afs: AngularFirestore, private router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe((params => this.userId = params.id));
+    this.userDoc = this.afs.doc<Profile>(`users/${this.userId}`);
+    this.user = this.userDoc.snapshotChanges()
+      .pipe(
+        map(action => {
+          const data = action.payload.data();
+          const id = action.payload.id;
+          return { id, ...data };
+        })
+      )
+      .pipe(
+        tap(user => {
+          const { firstName, lastName, address, city, state, zip, phone, email } = user;
 
-    if (this.userId) {
-      this.userDoc = this.afs.doc<Profile>(`users/${this.userId}`);
-      this.user = this.userDoc.snapshotChanges()
-        .pipe(
-          map(action => {
-            const data = action.payload.data();
-            const id = action.payload.id;
-            return { id, ...data };
-          })
-        )
-        .pipe(
-          tap(user => {
-            const { firstName, lastName, address, city, state, zip, phone, email } = user;
-
-            if (!firstName && !lastName) {
-              this.profileForm.reset();
-            } else {
-              this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
-            }
-          })
-        );
-    }
+          if (!firstName && !lastName) {
+            this.profileForm.reset();
+          } else {
+            this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
+          }
+        })
+      );
   }
 
   updateForm() {
@@ -58,9 +55,7 @@ export class ProfileFormComponent {
   }
 
   submitForm() {
-    const usersCollection = this.afs.collection<Profile>('users');
-    usersCollection.add(this.profileForm.value).then(docRef => this.router.navigate([`/user/${docRef.id}`])
-    );
+    this.router.navigate([`/user/${this.userId}`]);
   }
 
   resetForm(form: string) {

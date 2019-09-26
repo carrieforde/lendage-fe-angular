@@ -1,0 +1,86 @@
+<div *ngIf="afAuth.user | async as user; else showLogin">
+  <div>
+    <h1>Hello, {{user.displayName}}</h1>
+    <button mat-flat-button
+      color="primary"
+      type="button"
+      (click)="logout()">Log Out</button>
+  </div>
+
+  <app-user-list></app-user-list>
+</div>
+
+<ng-template #showLogin>
+  <mat-tab-group>
+    <mat-tab label="Signup">
+      <mat-card>
+        <mat-card-title>Create an account</mat-card-title>
+        <form [formGroup]="signupForm"
+          (ngSubmit)="signup()">
+          <mat-form-field>
+            <mat-label for="email">Email address</mat-label>
+            <input matInput
+              type="text"
+              id="email"
+              name="email"
+              formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput
+              type="password"
+              id="password"
+              name="password"
+              formControlName="password">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Display Name</mat-label>
+            <input matInput
+              type="text"
+              id="displayName"
+              name="displayName"
+              formControlName="displayName">
+          </mat-form-field>
+
+          <button mat-flat-button
+            color="primary"
+            type="submit">Signup</button>
+        </form>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Login">
+      <mat-card>
+        <mat-card-title>Login</mat-card-title>
+        <form [formGroup]="loginForm">
+          <mat-form-field>
+            <mat-label for="email">Email address</mat-label>
+            <input matInput
+              type="text"
+              id="email"
+              name="email"
+              formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput
+              type="password"
+              id="password"
+              name="password"
+              formControlName="password">
+          </mat-form-field>
+
+          <small (click)="forgotPassword()">Forgot password</small>
+
+          <button mat-flat-button
+            color="primary"
+            type="button"
+            (click)="login()">Login</button>
+        </form>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</ng-template>

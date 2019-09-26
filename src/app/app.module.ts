@@ -12,16 +12,21 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileDetailComponent } from './profile-detail/profile-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { MatTabsModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileFormComponent,
     ProfileDetailComponent,
-    UserListComponent
+    UserListComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -30,14 +35,21 @@ import { UserListComponent } from './user-list/user-list.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatTabsModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    MatTabsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

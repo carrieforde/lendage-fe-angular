@@ -5,10 +5,10 @@ import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-welcome',
-  templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.css']
+  templateUrl: './signup-login.component.html',
+  styleUrls: ['./signup-login.component.css']
 })
-export class WelcomeComponent {
+export class SignupLoginComponent {
   signupForm = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required],

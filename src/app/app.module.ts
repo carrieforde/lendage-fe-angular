@@ -17,7 +17,7 @@ import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileDetailComponent } from './profile-detail/profile-detail.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { WelcomeComponent } from './welcome/welcome.component';
+import { SignupLoginComponent } from './signup-login/signup-login.component';
 import { MatTabsModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
@@ -26,7 +26,7 @@ import { MatTabsModule, MatProgressSpinnerModule } from '@angular/material';
     ProfileFormComponent,
     ProfileDetailComponent,
     UserListComponent,
-    WelcomeComponent
+    SignupLoginComponent
   ],
   imports: [
     BrowserModule,

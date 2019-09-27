@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ProfileId } from '../profile-id';
-import { Profile } from '../profile';
 import { Router } from '@angular/router';
+import { LoanAppService } from '../loan-app.service';
+import { LoanApp } from '../loan-app';
 
 @Component({
   selector: 'app-user-list',
@@ -12,26 +11,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent {
-  private usersCollection: AngularFirestoreCollection<Profile>;
-  users: Observable<ProfileId[]>;
+  loanApps: Observable<LoanApp[]>;
+  guid: string;
 
-  constructor(private afs: AngularFirestore, private router: Router) {
-    this.usersCollection = afs.collection<Profile>('users');
-    this.users = this.usersCollection.snapshotChanges()
-      .pipe(
-        map(actions => actions.map(a => {
-          const data = a.payload.doc.data() as Profile;
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        }))
-      );
+  constructor(
+    private loanAppService: LoanAppService,
+    private router: Router
+  ) {
+    this.loanApps = this.loanAppService.getLoanApps();
   }
 
-  viewUser(id: string) {
+  viewApp(id: string) {
     this.router.navigate([`/user/${id}`]);
   }
 
-  addUser() {
-    this.usersCollection.add({ firstName: '', lastName: '' }).then(docRef => this.router.navigate([`/user/${docRef.id}/edit`]));
+  addApp() {
+    this.guid = this.loanAppService.generateGuid();
+    this.loanAppService.addApp(this.guid)
+      .then(() => this.router.navigate([`/user/${this.guid}/edit`]));
   }
 }

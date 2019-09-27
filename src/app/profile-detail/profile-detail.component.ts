@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Profile } from '../profile';
 import { Observable } from 'rxjs';
+import { LoanAppService } from '../loan-app.service';
+import { LoanApp } from '../loan-app';
 
 @Component({
   selector: 'app-profile-detail',
@@ -10,22 +12,28 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile-detail.component.css']
 })
 export class ProfileDetailComponent {
-  private userDoc: AngularFirestoreDocument<Profile>;
-  userId: string;
-  user: Observable<Profile>;
+  guid: string;
+  loanApp: Observable<LoanApp>;
 
-  constructor(private route: ActivatedRoute, private afs: AngularFirestore, private router: Router) {
-    this.route.params.subscribe((params => this.userId = params.id));
-    this.userDoc = this.afs.doc<Profile>(`users/${this.userId}`);
-    this.user = this.userDoc.valueChanges();
+  constructor(
+    private loanAppService: LoanAppService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.params.subscribe((params => this.guid = params.id));
+    this.loanApp = this.loanAppService.getLoanApp(this.guid);
+  }
+
+  navigateHome() {
+    this.router.navigate(['/']);
   }
 
   editUser(id: string) {
     this.router.navigate([`/user/${id}/edit`]);
   }
 
-  deleteUser(id: string) {
-    this.afs.doc<Profile>(`users/${id}`).delete();
-    this.router.navigate(['/']);
+  deleteUser() {
+    this.loanAppService.deleteApp(this.guid)
+      .then(() => this.router.navigate(['/']));
   }
 }

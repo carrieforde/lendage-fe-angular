@@ -12,8 +12,8 @@ const redirectLogginInToItems = redirectLoggedInTo(['/']);
 const routes: Routes = [
   { path: '', component: SignupLoginComponent },
   { path: 'login', component: SignupLoginComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectLogginInToItems } },
-  { path: 'user', component: UserListComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
-  { path: 'user/:id', component: ProfileDetailComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
+  { path: 'user', component: UserListComponent },
+  { path: 'user/:id', component: ProfileDetailComponent },
   { path: 'user/:id/edit', component: ProfileFormComponent },
 ];
 

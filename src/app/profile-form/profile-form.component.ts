@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Profile } from '../profile';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap, first } from 'rxjs/operators';
+import { Observable, SubscriptionLike } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { LoanApp } from '../loan-app';
+import { LoanAppService } from '../loan-app.service';
 
 @Component({
   selector: 'app-profile-form',
@@ -22,50 +22,38 @@ export class ProfileFormComponent {
     phone: [''],
     email: ['']
   });
-  private userDoc: AngularFirestoreDocument<Profile>;
-  user: Observable<Profile>;
-  userId: string;
+  loanApp: SubscriptionLike;
+  guid: string;
 
-  constructor(private fb: FormBuilder, private afs: AngularFirestore, private router: Router, private route: ActivatedRoute) {
-    this.route.params.subscribe((params => this.userId = params.id));
-    this.userDoc = this.afs.doc<Profile>(`users/${this.userId}`);
-    this.user = this.userDoc.snapshotChanges()
-      .pipe(
-        map(action => {
-          const data = action.payload.data();
-          const id = action.payload.id;
-          return { id, ...data };
-        })
-      )
-      .pipe(
-        tap(user => {
-          const { firstName, lastName, address, city, state, zip, phone, email } = user;
+  constructor(
+    private loanAppService: LoanAppService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe((params => this.guid = params.id));
+    this.loanApp = this.loanAppService.getLoanApp(this.guid)
+      .subscribe(user => {
+        const { firstName, lastName, address, city, state, zip, phone, email } = user;
 
-          if (!firstName && !lastName) {
-            this.profileForm.reset();
-          } else {
-            this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
-          }
-        })
-      );
+        if (!firstName && !lastName) {
+          this.profileForm.reset();
+        } else {
+          this.profileForm.patchValue({ firstName, lastName, address, city, state, zip, phone, email });
+        }
+      });
   }
 
   updateForm() {
-    this.userDoc.update(this.profileForm.value);
+    this.loanAppService.updateApp(this.guid, this.profileForm.value);
   }
 
   submitForm() {
-    this.router.navigate([`/user/${this.userId}`]);
+    this.router.navigate([`/user/${this.guid}`]);
   }
 
   resetForm(form: string) {
     this[form].reset();
-
-    if (this.userId) {
-      // TODO: Give the user the option to delete the user, or undo their changes (try Snapshot changes?)
-      this.afs.doc<Profile>(`users/${this.userId}`).delete();
-    }
-
     this.router.navigate(['/']);
   }
 }

@@ -1,11 +1,11 @@
 <ul>
-  <li *ngFor="let user of (users | async)">
-    <h3>{{user.firstName}} {{user.lastName}}</h3>
-    <p *ngIf="user.city && user.state">{{user.city}}, {{user.state}}</p>
+  <li *ngFor="let app of (loanApps | async)">
+    <h3>{{app.firstName}} {{app.lastName}}</h3>
+    <p *ngIf="app.city && app.state">{{app.city}}, {{app.state}}</p>
     <div>
       <button mat-flat-button
         color="primary"
-        (click)="viewUser(user.id)">View User</button>
+        (click)="viewApp(app.id)">View app</button>
     </div>
   </li>
 </ul>
@@ -13,4 +13,4 @@
 <button mat-flat-button
   color="primary"
   type="button"
-  (click)="addUser()">Add User</button>
+  (click)="addApp()">Add app</button>
